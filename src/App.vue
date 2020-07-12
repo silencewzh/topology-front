@@ -11,6 +11,7 @@
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
+            :on-success="uploadSuccess"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
@@ -35,6 +36,7 @@ export default {
   name: 'app',
   components: {
   },
+  // var chartData = null;
    data() {
       return {
         fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
@@ -47,23 +49,102 @@ export default {
 
       // 指定图表的配置项和数据
       var option = {
-        title: {
-          text: 'ECharts 示例'
-        },
-        tooltip: {},
-        legend: {
-          data:['销量']
-        },
-        xAxis: {
-          data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-        },
-        yAxis: {},
-        series: [{
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
-        }]
-      };
+    title: {
+        text: '告警根因分析'
+    },
+    tooltip: {},
+    legend:{
+      data:['其他节点','根因节点']
+    },
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series: [
+        {
+            type: 'graph',
+            layout: 'none',
+            symbolSize: 50,
+            roam: true,
+            label: {
+                show: true
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            edgeLabel: {
+                fontSize: 20
+            },
+            categories:[
+              {
+                name:'其他节点',
+                base:'其他节点'
+              },
+              {
+                name:'根因节点',
+                base:'根因节点'
+              }
+            ],
+            data: [{
+                name: '节点1',
+                x: 300,
+                y: 300,
+                category:0
+            }, {
+                name: '节点2',
+                x: 800,
+                y: 300,
+                category:0
+            }, {
+                name: '节点3',
+                x: 550,
+                y: 100,
+                category:0
+            }, {
+                name: '节点4',
+                x: 550,
+                y: 500,                
+                category:1
+            }],
+            // links: [],
+            links: [{
+                source: 0,
+                target: 1,
+                symbolSize: [5, 20],
+                // label: {
+                //     show: true
+                // },
+                // lineStyle: {
+                //     width: 5,
+                //     curveness: 0.2
+                // }
+            }, {
+                source: '节点2',
+                target: '节点1',
+                // label: {
+                //     show: true
+                // },
+                // lineStyle: {
+                //     curveness: 0.2
+                // }
+            }, {
+                source: '节点1',
+                target: '节点3'
+            }, {
+                source: '节点2',
+                target: '节点3'
+            }, {
+                source: '节点2',
+                target: '节点4'
+            }, {
+                source: '节点1',
+                target: '节点4'
+            }],
+            lineStyle: {
+                opacity: 0.9,
+                width: 2,
+                curveness: 0
+            }
+        }
+    ]
+    };
 
       myChart.setOption(option);
       },
@@ -79,7 +160,10 @@ export default {
       // eslint-disable-next-line no-unused-vars
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
-      }
+      },
+      // uploadSuccess(response, file, fileList){
+
+      // }
   },
   mounted(){
     this.myEcharts();
