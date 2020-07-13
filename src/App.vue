@@ -61,11 +61,13 @@ export default {
     series: [
         {
             type: 'graph',
-            layout: 'none',
-            symbolSize: 50,
+            layout: "force",
+            symbol: "circle",
+            symbolSize: 10,
             roam: true,
+            focusNodeAdjacency: true,
             label: {
-                show: true
+                show: false
             },
             edgeSymbol: ['circle', 'arrow'],
             edgeSymbolSize: [4, 10],
@@ -82,48 +84,36 @@ export default {
                 base:'根因节点'
               }
             ],
+            force: {
+              repulsion: 40,
+              gravity: 0.11,
+              edgeLength: 15,
+              layoutAnimation: true,
+              friction: 0.6
+              },
+            draggable: true,
             data: [{
                 name: '节点1',
-                x: 300,
-                y: 300,
                 category:0
             }, {
                 name: '节点2',
-                x: 800,
-                y: 300,
                 category:0
             }, {
                 name: '节点3',
-                x: 550,
-                y: 100,
                 category:0
             }, {
                 name: '节点4',
-                x: 550,
-                y: 500,                
                 category:1
             }],
             // links: [],
             links: [{
                 source: 0,
                 target: 1,
-                symbolSize: [5, 20],
-                // label: {
-                //     show: true
-                // },
-                // lineStyle: {
-                //     width: 5,
-                //     curveness: 0.2
-                // }
+
             }, {
                 source: '节点2',
                 target: '节点1',
-                // label: {
-                //     show: true
-                // },
-                // lineStyle: {
-                //     curveness: 0.2
-                // }
+
             }, {
                 source: '节点1',
                 target: '节点3'
