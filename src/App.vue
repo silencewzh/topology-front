@@ -235,12 +235,13 @@ export default {
        // eslint-disable-next-line no-unused-vars
        uploadSuccess(response, file, fileList){
          
-        //console.log(response.data)
+        console.log(response.data[0])
+        console.log(response.data[1])
         var that = this
-        that.tableData=response.data[0]
+        that.tableData=response.data[1]
         var nodes
         var nodeD =that.nodeD
-        var rootNode = response.data[1]
+        var rootNode = response.data[0]
         console.log(rootNode)
         for(nodes in nodeD){
         if(rootNode.is_root==1 && nodeD[nodes].name==rootNode.root_node){
