@@ -255,7 +255,7 @@ export default {
          myChart.setOption(option)
       },
       // eslint-disable-next-line no-unused-vars
-      changeData(file){
+      changeData(file){}
       //   var that = this
       //   that.tableData=[]
       //   var nodes
